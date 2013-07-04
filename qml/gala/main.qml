@@ -17,8 +17,8 @@ Rectangle {
         anchors.verticalCenter: parent.verticalCenter
         Stars {}
 
-        MyCanvas {
-            }
+//        DebugCanvas {}
+
         Keys.onPressed: {
             if ( event.key === Qt.Key_Left )
                 Logic.leftPressed = true

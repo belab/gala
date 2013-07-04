@@ -2,14 +2,18 @@ var leftPressed = false;
 var rightPressed = false;
 var started = false;
 var fighterComponent = Qt.createComponent("Fighter.qml");
-var beeComponenet = Qt.createComponent("Bee.qml");
-var butterflyComponenet = Qt.createComponent("Butterfly.qml");
+var beeComponent = Qt.createComponent("Bee.qml");
+var butterflyComponent = Qt.createComponent("Butterfly.qml");
 var fighter = null;
 var enemies = [];
-var butterflies = [101,81,61,41,21];
-var bees = [123,143,163,183,203];
+var firstWave = [
+            [ [beeComponent,123 ],[butterflyComponent,101] ],
+            [ [beeComponent,143 ],[butterflyComponent,81] ],
+            [ [beeComponent,163 ],[butterflyComponent,61] ],
+            [ [beeComponent,183 ],[butterflyComponent,41] ],
+            [ [beeComponent,203 ],[butterflyComponent,21] ]
+        ];
 var waveCount = 0;
-var wavePause = 20;
 
 function startNewGame() {
     if( started === true ) {
@@ -25,18 +29,18 @@ function startNewGame() {
         else
             console.log("Still loading ship");
     }
-    while(beeComponenet.status !== Component.Ready ) {
-        if(beeComponenet.status === Component.Error) {
-            console.log(beeComponenet.errorString());
+    while(beeComponent.status !== Component.Ready ) {
+        if(beeComponent.status === Component.Error) {
+            console.log(beeComponent.errorString());
             break;
         }
         else
             console.log("Still loading bee");
     }
 
-    while(butterflyComponenet.status !== Component.Ready ) {
-        if(butterflyComponenet.status === Component.Error) {
-            console.log(butterflyComponenet.errorString());
+    while(butterflyComponent.status !== Component.Ready ) {
+        if(butterflyComponent.status === Component.Error) {
+            console.log(butterflyComponent.errorString());
             break;
         }
         else
@@ -53,33 +57,12 @@ function startNewGame() {
     fighter.x = background.width/2-7;
     fighter.y = background.height-15;
 
-    for( var i = 0; i < 5; i++) {
-        enemies.push(beeComponenet.createObject(background, {"endX": bees[i], "endY": 70 }));
+    for( var i = 0; i < firstWave.length; i++ ) {
+        var entry = firstWave[i];
+        for( var j = 0; j < entry.length; j++ ) {
+            enemies.push(entry[j][0].createObject(background, {"endX": entry[j][1], "endY": 70 }));
+        }
     }
-    for( var i = 0; i < 5; i++) {
-        enemies.push(butterflyComponenet.createObject(background, {"endX": butterflies[i], "endY": 70 }));
-    }
-//    enemies.push(beeComponenet.createObject(background, {"endX": 123, "endY": 70 }));
-//    enemies.push(beeComponenet.createObject(background, {"endX": 143, "endY": 70 }));
-//    enemies.push(beeComponenet.createObject(background, {"endX": 163, "endY": 70 }));
-//    enemies.push(beeComponenet.createObject(background, {"endX": 183, "endY": 70 }));
-//    enemies.push(beeComponenet.createObject(background, {"endX": 203, "endY": 70 }));
-
-
-//    enemies.push(butterflyComponenet.createObject(background, {"endX": 101, "endY": 70 }));
-//    enemies.push(butterflyComponenet.createObject(background, {"endX": 81, "endY": 70 }));
-//    enemies.push(butterflyComponenet.createObject(background, {"endX": 61, "endY": 70 }));
-//    enemies.push(butterflyComponenet.createObject(background, {"endX": 41, "endY": 70 }));
-//    enemies.push(butterflyComponenet.createObject(background, {"endX": 21, "endY": 70 }));
-
-//    var animation = Qt.createQmlObject(
-//                'import QtQuick 2.0; NumberAnimation { id:motion; from: 0; to: 1; duration: 3000 }',
-//        background, "dynamicSnippet1");
-//    animation.destroy(3000);
-//    animation.targets = enemies;
-//    animation.property = 'advance';
-
-//    animation.start();
 
     console.log("ready");
 
@@ -89,7 +72,7 @@ function startNewGame() {
 function quit() {
     started = false;
     fighter = null;
-    butterflyComponenet = 0;
+    butterflyComponent = 0;
     console.log("quit");
     Qt.quit()
 }
@@ -107,32 +90,14 @@ function move( time ) {
         fighter.x = 0;
     else if( fighter.x > background.width-15 )
         fighter.x = background.width-15;
-//    ship.rotation = (ship.rotation - 10) % 360
 }
 
 function triggerWave() {
     if( !started )
         return;
 
-    if( wavePause > 0 ) {
-        wavePause--;
-        return;
+    if( waveCount < enemies.length ){
+        enemies[waveCount++].started = true;
+        enemies[waveCount++].started = true;
     }
-
-    if( waveCount < 5 ){
-        enemies[waveCount].started = true;
-        waveCount++;
-        if( waveCount%5==0 ) {
-            wavePause = 20;
-        }
-
-        return;
-    }
-
-    if( waveCount < 10 ){
-        enemies[waveCount].started = true;
-        waveCount++;
-        return;
-    }
-
 }

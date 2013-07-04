@@ -19,7 +19,7 @@ Item {
         target:bee
         running:started
         orientation:PathAnimation.TopFirst
-        duration:3000
+        duration:2500
         endRotation: 0
     }
 

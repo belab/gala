@@ -4,21 +4,25 @@ Canvas {
     id: canvas
     anchors.fill: parent
 
-    PathFromTopLeft {
-        id:path1
-        endX: 123;
-        endY: 70;
-    }
-    PathFromTopRight {
-        id:path2
-        endX: 101;
-        endY: 70;
-    }
-
+//    property list<Path> pathList: []
+//            State { name: "a1" },
+//            State { name: "a2" },
+////            PathFromTopLeft {id: p1},
+////            PathFromTopRight {id: p2}
+//        ]
+//    pathList: [
+//        PathFromTopLeft {id: p1},
+//        PathFromTopRight {id: p2}
+//    ]
     onPaint: {
         var ctx = canvas.getContext('2d');
         ctx.reset();
         ctx.strokeStyle = Qt.rgba(0.7, 1, 0.3, 1.0);
+        for( i = 0; i < pathList.length; i++ ) {
+            ctx.path = pathList[i];
+            ctx.stroke();
+        }
+
 //        ctx.lineTo(95, 0);
 //        ctx.lineTo(112,30);
 //        ctx.lineTo(200,135);
@@ -31,10 +35,10 @@ Canvas {
 //        ctx.lineTo(150, 190);
 //        ctx.lineTo(135, 170);
 //        ctx.lineTo(130, 144);
-        ctx.path = path1;
-        ctx.stroke();
-        ctx.path = path2;
-        ctx.stroke();
+//        ctx.path = path1;
+//        ctx.stroke();
+//        ctx.path = path2;
+//        ctx.stroke();
 
 //        ctx.strokeStyle = Qt.rgba(0.3, 0.7, 1, 1.0);
 //        ctx.path = halfHeart;
