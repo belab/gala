@@ -4,8 +4,10 @@ var started = false;
 var fighterComponent = Qt.createComponent("Fighter.qml");
 var beeComponent = Qt.createComponent("Bee.qml");
 var butterflyComponent = Qt.createComponent("Butterfly.qml");
+var lifeComponent = Qt.createComponent("Life.qml");
 var fighter = null;
 var enemies = [];
+var lifes = [];
 var firstWave = [
             [ [beeComponent,123 ],[butterflyComponent,101] ],
             [ [beeComponent,143 ],[butterflyComponent,81] ],
@@ -47,6 +49,23 @@ function startNewGame() {
             console.log("Still loading butterfly");
     }
 
+    while(lifeComponent.status !== Component.Ready ) {
+        if(lifeComponent.status === Component.Error) {
+            console.log(lifeComponent.errorString());
+            break;
+        }
+        else
+            console.log("Still loading life");
+    }
+
+
+    lifes[0] = lifeComponent.createObject(background);
+    lifes[0].x = 1;
+    lifes[0].y = background.height-15;
+    lifes[1] = lifeComponent.createObject(background);
+    lifes[1].x = 15;
+    lifes[1].y = background.height-15;
+
     console.log("creating ship");
     fighter = fighterComponent.createObject(background);
     if (fighter === null) {
@@ -55,7 +74,7 @@ function startNewGame() {
     }
 
     fighter.x = background.width/2-7;
-    fighter.y = background.height-15;
+    fighter.y = background.height-31;
 
     for( var i = 0; i < firstWave.length; i++ ) {
         var entry = firstWave[i];

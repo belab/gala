@@ -22,4 +22,7 @@ include(qtquick2applicationviewer/qtquick2applicationviewer.pri)
 qtcAddDeployment()
 
 OTHER_FILES += \
-    qml/gala/DebugCanvas.qml
+    qml/gala/DebugCanvas.qml \
+    qml/gala/Life.qml
+
+RC_ICONS = gal.ico
