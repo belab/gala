@@ -55,7 +55,7 @@ Rectangle {
 
         Timer {
             id: wavebeat;
-            interval: 3000;
+            interval: 150;
             running: true
             repeat: true
             onTriggered: {
@@ -71,8 +71,8 @@ Rectangle {
         source: "galaga_bezel.png"
     }
 
-    Image {
-        anchors.fill: parent
-        source: "bezel_glass.png"
-    }
+//    Image {
+//        anchors.fill: parent
+//        source: "bezel_glass.png"
+//    }
 }
