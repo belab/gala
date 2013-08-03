@@ -18,7 +18,6 @@ Item {
         y:0
         Text {
             text: "HIGH SCORE"
-    //            font.family: "Fixed Sys"
             font.pointSize: 5
             font.bold: true
             color: "red"
@@ -30,7 +29,6 @@ Item {
         y:7
         Text {
             text: "00"
-    //            font.family: "Helvetica"
             font.pointSize: 5
             font.bold: true
             color: "white"
@@ -42,7 +40,6 @@ Item {
         y:7
         Text {
             text: "20000"
-    //            font.family: "Helvetica"
             font.pointSize: 5
             font.bold: true
             color: "white"

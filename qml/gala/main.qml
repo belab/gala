@@ -4,7 +4,7 @@ import "game.js" as Logic
 
 Rectangle {
     property real scaling: 2.4
-    width: 4000*0.099*scaling
+    width: 4000*0.099*scaling // fits best with the bezel
     height: 3713*0.104*scaling
     color: "black"
     antialiasing: true

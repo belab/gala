@@ -10,7 +10,7 @@ ParticleSystem {
     }
 
     Emitter {
-        width: 224; height: 1
+        width: parent.width; height: 1
         size: 8
         sizeVariation: 5
         anchors.top: parent.top
@@ -24,7 +24,7 @@ ParticleSystem {
     }
 
     Emitter {
-        width: 224; height: 288
+        width: parent.width; height: parent.height
         size: 8
         sizeVariation: 5
         anchors.top: parent.top
