@@ -1,4 +1,4 @@
-import QtQuick 2.0
+import QtQuick 2.4
 
 Canvas {
     id: canvas
@@ -18,10 +18,10 @@ Canvas {
         var ctx = canvas.getContext('2d');
         ctx.reset();
         ctx.strokeStyle = Qt.rgba(0.7, 1, 0.3, 1.0);
-        for( i = 0; i < pathList.length; i++ ) {
-            ctx.path = pathList[i];
-            ctx.stroke();
-        }
+//        for( var i = 0; i < pathList.length; i++ ) {
+//            ctx.path = pathList[i];
+//            ctx.stroke();
+//        }
 
 //        ctx.lineTo(95, 0);
 //        ctx.lineTo(112,30);

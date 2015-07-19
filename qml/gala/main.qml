@@ -1,17 +1,21 @@
-import QtQuick 2.0
+import QtQuick 2.4
+import QtQuick.Controls 1.3
+import QtQuick.Window 2.2
+import QtQuick.Dialogs 1.2
 
 import "game.js" as Logic
 
-Rectangle {
+ApplicationWindow {
+    id: app
     property real scaling: 2.4
     width: 4000*0.099*scaling // fits best with the bezel
     height: 3713*0.104*scaling
     color: "black"
-    antialiasing: true
+    visible: true
     Rectangle {
         width: 224
         height: 288
-        scale: parent.scaling
+        scale: app.scaling
         color: "black"
         id: background
         focus: true
@@ -21,14 +25,14 @@ Rectangle {
         anchors.verticalCenterOffset: 25*scaling
         Stars {}
 
-//        DebugCanvas {}
+        DebugCanvas {}
 
         Keys.onPressed: {
             if ( event.key === Qt.Key_Left )
                 Logic.leftPressed = true
             else if( event.key === Qt.Key_Right )
                 Logic.rightPressed = true
-            else if( event.key === Qt.Key_Enter ) {
+            else if( event.key === Qt.Key_Enter) {
                 console.log("Enter")
                 Logic.startNewGame()
             } else if ( event.key === Qt.Key_Escape )

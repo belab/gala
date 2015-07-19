@@ -1,4 +1,4 @@
-import QtQuick 2.0
+import QtQuick 2.4
 
 Item {
     id: butterfly
@@ -16,7 +16,7 @@ Item {
     PathAnimation {
         path:myPath
         target:butterfly
-        running:started
+        running:butterfly.started
         orientation:PathAnimation.TopFirst
         duration:2500
         endRotation: 0

@@ -1,13 +1,12 @@
-#include <QtGui/QGuiApplication>
-#include "qtquick2applicationviewer.h"
+#include <QApplication>
+#include <QQmlApplicationEngine>
 
 int main(int argc, char *argv[])
 {
-    QGuiApplication app(argc, argv);
+    QApplication app(argc, argv);
 
-    QtQuick2ApplicationViewer viewer;
-    viewer.setMainQmlFile(QStringLiteral("qml/gala/main.qml"));
-    viewer.showExpanded();
+    QQmlApplicationEngine engine;
+    engine.load(QUrl(QStringLiteral("qrc:/qml/gala/main.qml")));
 
     return app.exec();
 }

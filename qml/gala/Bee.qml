@@ -1,4 +1,4 @@
-import QtQuick 2.0
+import QtQuick 2.4
 
 Item {    
     id: bee
@@ -17,7 +17,7 @@ Item {
     PathAnimation {
         path:myPath
         target:bee
-        running:started
+        running: bee.started
         orientation:PathAnimation.TopFirst
         duration:2500
         endRotation: 0
