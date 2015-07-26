@@ -1,6 +1,6 @@
 gala
 ====
 
-hommage to galaga in qml
+homage to galaga in qml
 
 http://belab.github.io/gala
