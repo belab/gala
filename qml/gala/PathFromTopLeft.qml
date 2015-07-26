@@ -18,6 +18,7 @@ Path {
             x: 135; y: 170
             radiusX: 25; radiusY: 25
             useLargeArc: true
+            direction: PathArc.Clockwise
     }
     PathLine { x: myPath.endX; y: 80 }
     PathCurve{ x: myPath.endX; y: myPath.endY }

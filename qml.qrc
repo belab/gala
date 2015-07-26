@@ -1,10 +1,9 @@
 <RCC>
     <qresource prefix="/">
         <file>qml/gala/bee.png</file>
-        <file>qml/gala/Bee.qml</file>
         <file>qml/gala/bezel_glass.png</file>
         <file>qml/gala/butterfly.png</file>
-        <file>qml/gala/Butterfly.qml</file>
+        <file>qml/gala/Enemy.qml</file>
         <file>qml/gala/DebugCanvas.qml</file>
         <file>qml/gala/fighter.png</file>
         <file>qml/gala/Fighter.qml</file>
@@ -18,5 +17,8 @@
         <file>qml/gala/PathFromTopRight.qml</file>
         <file>qml/gala/star.png</file>
         <file>qml/gala/Stars.qml</file>
+        <file>qml/gala/Fire.qml</file>
+        <file>qml/gala/fire.png</file>
+        <file>qml/gala/Fire.wav</file>
     </qresource>
 </RCC>

@@ -2,8 +2,6 @@ import QtQuick 2.4
 
 Canvas {
     id: canvas
-    anchors.fill: parent
-
 //    property list<Path> pathList: []
 //            State { name: "a1" },
 //            State { name: "a2" },
@@ -11,13 +9,17 @@ Canvas {
 ////            PathFromTopRight {id: p2}
 //        ]
 //    pathList: [
-//        PathFromTopLeft {id: p1},
-//        PathFromTopRight {id: p2}
+        PathFromTopLeft {id: p1}
+        PathFromTopRight {id: p2}
 //    ]
     onPaint: {
         var ctx = canvas.getContext('2d');
         ctx.reset();
         ctx.strokeStyle = Qt.rgba(0.7, 1, 0.3, 1.0);
+        ctx.path = p1
+        ctx.stroke();
+        ctx.path = p2
+        ctx.stroke();
 //        for( var i = 0; i < pathList.length; i++ ) {
 //            ctx.path = pathList[i];
 //            ctx.stroke();

@@ -2,6 +2,7 @@ import QtQuick 2.4
 import QtQuick.Controls 1.3
 import QtQuick.Window 2.2
 import QtQuick.Dialogs 1.2
+import QtMultimedia 5.0
 
 import "game.js" as Logic
 
@@ -12,6 +13,17 @@ ApplicationWindow {
     height: 3713*0.104*scaling
     color: "black"
     visible: true
+    Audio{
+        id: player
+        source: "gala/gala.mp3"
+        autoPlay: true
+        loops: Audio.Infinite
+    }
+
+    Component.onCompleted: {
+        Logic.loadComponents();
+    }
+
     Rectangle {
         width: 224
         height: 288
@@ -23,9 +35,13 @@ ApplicationWindow {
         anchors.horizontalCenterOffset: -1.1*scaling
         anchors.verticalCenter: parent.verticalCenter
         anchors.verticalCenterOffset: 25*scaling
-        Stars {}
+        Stars {
+            anchors.fill: background
+        }
 
-        DebugCanvas {}
+//        DebugCanvas {
+//            anchors.fill: background
+//        }
 
         Keys.onPressed: {
             if ( event.key === Qt.Key_Left )
@@ -33,10 +49,14 @@ ApplicationWindow {
             else if( event.key === Qt.Key_Right )
                 Logic.rightPressed = true
             else if( event.key === Qt.Key_Enter) {
-                console.log("Enter")
-                Logic.startNewGame()
+                console.log("Enter");
+                Logic.rest();
+                hud.showStage(true);
+                stageHudTimer.restart();
             } else if ( event.key === Qt.Key_Escape )
                 Logic.quit()
+            else if( event.key === Qt.Key_0)
+                Logic.fire()
         }
 
         Keys.onReleased: {
@@ -46,6 +66,15 @@ ApplicationWindow {
                 Logic.rightPressed = false
         }
 
+        Timer {
+            id: stageHudTimer;
+            interval: 1500;
+            repeat: false
+            onTriggered: {
+                hud.showStage( false );
+                Logic.startNewGame();
+            }
+        }
 
         Timer {
             id: heartbeat;
@@ -59,15 +88,17 @@ ApplicationWindow {
 
         Timer {
             id: wavebeat;
-            interval: 150;
-            running: true
+            interval: 180;
             repeat: true
             onTriggered: {
                 Logic.triggerWave()
             }
         }
 
-        Hud{}
+        Hud{
+            id: hud
+            anchors.fill: parent
+        }
     }
 
     Image {

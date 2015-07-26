@@ -1,6 +1,7 @@
 import QtQuick 2.4
 
 Item {
+    property int score: 0;
     Item {
         x:20
         y:0
@@ -28,7 +29,7 @@ Item {
         x:30
         y:7
         Text {
-            text: "00"
+            text: score
             font.pointSize: 5
             font.bold: true
             color: "white"
@@ -44,5 +45,20 @@ Item {
             font.bold: true
             color: "white"
         }
+    }
+
+    function showStage(visible) {
+        stageText.visible = visible;
+    }
+
+
+    Text {
+        id: stageText
+        visible: false
+        anchors.centerIn: parent
+        text: "STAGE 1"
+        font.pointSize: 8
+        font.bold: true
+        color: "#55CCCC"
     }
 }

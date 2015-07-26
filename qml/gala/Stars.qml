@@ -2,7 +2,6 @@ import QtQuick 2.4
 import QtQuick.Particles 2.0
 
 ParticleSystem {
-    anchors.fill: parent
 
     ImageParticle {
         source: "star.png"
