@@ -1,13 +1,29 @@
-var fighterComponent = Qt.createComponent("Fighter.qml");
-var enemyComponent = Qt.createComponent("Enemy.qml");
-var lifeComponent = Qt.createComponent("Life.qml");
-var fireComponent = Qt.createComponent("Fire.qml");
-var pathFromLeftComponent = Qt.createComponent("PathFromTopLeft.qml");
-var pathFromRightComponent = Qt.createComponent("PathFromTopRight.qml");
+var components = [];
+
+function addComponent(fileName) {
+    var c = Qt.createComponent(fileName);
+    components.push(c);
+    return c;
+}
+
+function createInstance(component, props) {
+    var instance = component.createObject(background, props);
+    if (instance === null) {
+        console.log("error creating instance");
+        console.log(component.errorString());
+    }
+    return instance;
+}
+
+var fighterComponent = addComponent("Fighter.qml");
+var enemyComponent = addComponent("Enemy.qml");
+var lifeComponent = addComponent("Life.qml");
+var fireComponent = addComponent("Fire.qml");
+var pathFromLeftComponent = addComponent("PathFromTopLeft.qml");
+var pathFromRightComponent = addComponent("PathFromTopRight.qml");
 
 var fighter = null;
 var enemies = [];
-var lifes = [];
 var bullets = [];
 var firstWave = [
             [ ["bee.png",123,pathFromLeftComponent],["butterfly.png",101,pathFromRightComponent] ],
@@ -22,122 +38,58 @@ var rightPressed = false;
 var started = false;
 var waveCount = 0;
 var score = 0;
+var lifeCount = 4;
 
 function loadComponents() {
-    while(fighterComponent.status !== Component.Ready ) {
-        if(fighterComponent.status === Component.Error) {
-            console.log(fighterComponent.errorString());
-            break;
+    for(var i = 0; i < components.length; i++) {
+        while(components[i].status !== Component.Ready ) {
+            if(components[i].status === Component.Error) {
+                console.log(components[i].errorString());
+                break;
+            }
+            else
+                console.log("Loading component...");
         }
-        else
-            console.log("Still loading ship");
     }
 
-    while(enemyComponent.status !== Component.Ready ) {
-        if(enemyComponent.status === Component.Error) {
-            console.log(enemyComponent.errorString());
-            break;
-        }
-        else
-            console.log("Still loading butterfly");
-    }
+    fighter = createInstance(fighterComponent, {});
 
-    while(lifeComponent.status !== Component.Ready ) {
-        if(lifeComponent.status === Component.Error) {
-            console.log(lifeComponent.errorString());
-            break;
-        }
-        else
-            console.log("Still loading life");
-    }
-
-    while(fireComponent.status !== Component.Ready ) {
-        if(fireComponent.status === Component.Error) {
-            console.log(fireComponent.errorString());
-            break;
-        }
-        else
-            console.log("Still loading fire");
-    }
-
-    while(pathFromLeftComponent.status !== Component.Ready ) {
-        if(pathFromLeftComponent.status === Component.Error) {
-            console.log(pathFromLeftComponent.errorString());
-            break;
-        }
-        else
-            console.log("Still loading path from left");
-    }
-
-    while(pathFromRightComponent.status !== Component.Ready ) {
-        if(pathFromRightComponent.status === Component.Error) {
-            console.log(pathFromRightComponent.errorString());
-            break;
-        }
-        else
-            console.log("Still loading path from right");
-    }
-
-    lifes[0] = lifeComponent.createObject(background);
-    lifes[0].x = 1;
-    lifes[0].y = background.height-15;
-    lifes[1] = lifeComponent.createObject(background);
-    lifes[1].x = 15;
-    lifes[1].y = background.height-15;
-
-    console.log("creating ship");
-    fighter = fighterComponent.createObject(background);
-    if (fighter === null) {
-        console.log("error creating ship");
-        console.log(fighterComponent.errorString());
-    }
-
-    for( var i = 0; i < firstWave.length; i++ ) {
+    for( i = 0; i < firstWave.length; i++ ) {
         var entry = firstWave[i];
         for( var j = 0; j < entry.length; j++ ) {
-            var path = entry[j][2].createObject(background, {"endX": entry[j][1], "endY": 70 });
-            var enemy = enemyComponent.createObject(background, {"image": entry[j][0], "flypath": path});
-            if( enemy === null ) {
-                console.log("error creating enemy");
-                console.log(entry[j][0].errorString());
-            }
-
-            enemy.visible = false;
-            enemies.push( enemy );
+            var path = createInstance(entry[j][2], {"endX": entry[j][1], "endY": 70 });
+            enemies.push(createInstance(enemyComponent, {"image": entry[j][0], "flypath": path, visible: false}));
         }
     }
 
     for( i = 0; i < 3; i++ ) {
-        var fire = fireComponent.createObject(background);
-        bullets.push(fire);
+        bullets.push(createInstance(fireComponent, {}));
     }
-
-
 }
 
-function rest() {
+function reset() {
     for( var i = 0; i < enemies.length; i++ ){
         enemies[i].reset();
     }
-    for( var i = 0; i < bullets.length; i++ ) {
+    for( i = 0; i < bullets.length; i++ ) {
         bullets[i].reset();
     }
     fighter.visible = false;
+    hud.showLifes(false);
 }
 
 function startNewGame() {
     waveCount = 0;
     score = 0;
     hud.score = 0;
-
+    hud.lifeCount = lifeCount;
+    hud.showLifes(true);
     console.log("start game");
-
 
     fighter.x = background.width/2-7;
     fighter.y = background.height-31;
     fighter.visible = true;
 
-    console.log("ready");
     started = true;
     wavebeat.restart();
 }
@@ -146,7 +98,6 @@ function quit() {
     started = false;
     fighter = null;
     enemyComponent = 0;
-    console.log("quit");
     Qt.quit()
 }
 
@@ -198,7 +149,7 @@ function triggerWave() {
 }
 
 function fire() {
-    if( !started )
+    if( !started || !fighter.visible)
         return;
     for( var i = 0; i < 3; ++i ) {
         if(!bullets[i].visible){

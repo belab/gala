@@ -50,7 +50,7 @@ ApplicationWindow {
                 Logic.rightPressed = true
             else if( event.key === Qt.Key_Enter) {
                 console.log("Enter");
-                Logic.rest();
+                Logic.reset();
                 hud.showStage(true);
                 stageHudTimer.restart();
             } else if ( event.key === Qt.Key_Escape )
