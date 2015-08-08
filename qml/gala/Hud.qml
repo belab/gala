@@ -62,7 +62,7 @@ Item {
         visible: false
         anchors.centerIn: parent
         text: "STAGE 1"
-        font.pointSize: 8
+        font.pointSize: 6
         font.bold: true
         color: "#55CCCC"
     }

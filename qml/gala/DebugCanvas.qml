@@ -2,15 +2,15 @@ import QtQuick 2.4
 
 Canvas {
     id: canvas
-//    property list<Path> pathList: []
+    property list<Path> pathList: [
 //            State { name: "a1" },
 //            State { name: "a2" },
-////            PathFromTopLeft {id: p1},
-////            PathFromTopRight {id: p2}
-//        ]
+            PathFromTopLeft {id: p1},
+            PathFromTopRight {id: p2}
+        ]
 //    pathList: [
-        PathFromTopLeft {id: p1}
-        PathFromTopRight {id: p2}
+//        PathFromTopLeft {id: p1}
+//        PathFromTopRight {id: p2}
 //    ]
     onPaint: {
         var ctx = canvas.getContext('2d');
@@ -20,10 +20,10 @@ Canvas {
         ctx.stroke();
         ctx.path = p2
         ctx.stroke();
-//        for( var i = 0; i < pathList.length; i++ ) {
-//            ctx.path = pathList[i];
-//            ctx.stroke();
-//        }
+        for( var i = 0; i < pathList.length; i++ ) {
+            ctx.path = pathList[i];
+            ctx.stroke();
+        }
 
 //        ctx.lineTo(95, 0);
 //        ctx.lineTo(112,30);

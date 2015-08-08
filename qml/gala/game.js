@@ -26,11 +26,10 @@ var fighter = null;
 var enemies = [];
 var bullets = [];
 var firstWave = [
-            [ ["bee.png",123,pathFromLeftComponent],["butterfly.png",101,pathFromRightComponent] ],
-            [ ["bee.png",143,pathFromLeftComponent],["butterfly.png",81, pathFromRightComponent] ],
-            [ ["bee.png",163,pathFromLeftComponent],["butterfly.png",61, pathFromRightComponent] ],
-            [ ["bee.png",183,pathFromLeftComponent],["butterfly.png",41, pathFromRightComponent] ],
-            [ ["bee.png",203,pathFromLeftComponent],["butterfly.png",21, pathFromRightComponent] ]
+            [ ["bee.png",104, 74, pathFromLeftComponent],["butterfly.png",104, 50, pathFromRightComponent] ],
+            [ ["bee.png",120, 74, pathFromLeftComponent],["butterfly.png",120, 50, pathFromRightComponent] ],
+            [ ["bee.png",104, 86,pathFromLeftComponent],["butterfly.png",104, 62, pathFromRightComponent] ],
+            [ ["bee.png",120, 86,pathFromLeftComponent],["butterfly.png",120, 62, pathFromRightComponent] ]
         ];
 
 var leftPressed = false;
@@ -57,8 +56,8 @@ function loadComponents() {
     for( i = 0; i < firstWave.length; i++ ) {
         var entry = firstWave[i];
         for( var j = 0; j < entry.length; j++ ) {
-            var path = createInstance(entry[j][2], {"endX": entry[j][1], "endY": 70 });
-            enemies.push(createInstance(enemyComponent, {"image": entry[j][0], "flypath": path, visible: false}));
+            var path = createInstance(entry[j][3], {"endX": entry[j][1], "endY": entry[j][2] });
+            enemies.push(createInstance(enemyComponent, {"image": entry[j][0], "flypath": path, "end_x":entry[j][1], "end_y":entry[j][2]}));
         }
     }
 
@@ -84,7 +83,6 @@ function startNewGame() {
     hud.score = 0;
     hud.lifeCount = lifeCount;
     hud.showLifes(true);
-    console.log("start game");
 
     fighter.x = background.width/2-7;
     fighter.y = background.height-31;

@@ -20,6 +20,6 @@ Path {
             useLargeArc: true
             direction: PathArc.Clockwise
     }
-    PathLine { x: myPath.endX; y: 80 }
-    PathCurve{ x: myPath.endX; y: myPath.endY }
+    //PathLine { x: myPath.endX; y: 120 }
+//    PathCurve{ x: myPath.endX; y: myPath.endY }
 }
