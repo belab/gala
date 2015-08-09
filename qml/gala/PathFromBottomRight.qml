@@ -5,19 +5,18 @@ Path {
     property int endX: 103;
     property int endY: 70;
 
-    startX: 95
-    startY: 0
+    startX: 224
+    startY: 270
+    PathLine { x: 124; y: 180 }
     PathArc {
-            x: 112; y: 30
-            radiusX: 80; radiusY: 80
-            useLargeArc: false
-            direction: PathArc.Counterclockwise
-    }
-    PathLine { x: 200; y: 135 }
-    PathArc {
-            x: 135; y: 170
-            radiusX: 25; radiusY: 25
+            x: 174; y: 160
+            radiusX: 30; radiusY: 30
             useLargeArc: true
+            direction: PathArc.Clockwise
+    }
+    PathArc {
+            x: 114; y: 150
+            radiusX: 30; radiusY: 30
             direction: PathArc.Clockwise
     }
     //PathLine { x: myPath.endX; y: 120 }

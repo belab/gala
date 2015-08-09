@@ -98,15 +98,6 @@ ApplicationWindow {
             }
         }
 
-        Timer {
-            id: wavebeat;
-            interval: 180;
-            repeat: true
-            onTriggered: {
-                Logic.triggerWave()
-            }
-        }
-
         Hud{
             id: hud
             anchors.fill: parent

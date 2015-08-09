@@ -9,5 +9,6 @@
         <file>qml/gala/assets/Fire.wav</file>
         <file>qml/gala/assets/galaga_bezel.png</file>
         <file>qml/gala/assets/star.png</file>
+        <file>qml/gala/assets/galaga_boss.png</file>
     </qresource>
 </RCC>

@@ -7,10 +7,16 @@ Item {
     property url image
     visible: false
     state: "INITIAL"
+    property int image_width: file.implicitWidth/2
+    property int image_height: file.implicitHeight
     property int end_x
     property int end_y
-    Item {
-        id: proxy
+    property int start_time
+
+    Image {
+        id: file
+        source: sprite.source
+        visible: false
     }
 
     function reset() {
@@ -18,12 +24,24 @@ Item {
     }
 
     function start() {
-        enemy.state = "INCOMING"
+        start_timer.restart()
+        console.log("starting timer:", start_time)
+//        enemy.state = "INCOMING"
     }
 
 //    onStateChanged: {
 //        console.log("state changed:", state)
 //    }
+
+    Timer {
+        id: start_timer
+        interval: start_time
+        running: false
+        onTriggered: {
+            console.log("timer triggered")
+            enemy.state = "INCOMING"
+        }
+    }
 
     states: [
         State {
@@ -37,8 +55,8 @@ Item {
         State {
             name: "READY"
             PropertyChanges { target: enemy; visible: true }
-            PropertyChanges {target: enemy; x: ((end_x - background.width/2) * swinger.scale ) + background.width/2 -7  }
-            PropertyChanges {target: enemy; y: ((end_y - 30) * swinger.scale ) + 30 - 5 }
+            PropertyChanges {target: enemy; x: ((end_x - background.width/2) * swinger.scale ) + background.width/2 - image_width/2  }
+            PropertyChanges {target: enemy; y: ((end_y - 30) * swinger.scale ) + 30 - image_height/2 }
         }
     ]
 
@@ -60,7 +78,7 @@ Item {
     SequentialAnimation {
         id: incoming
         PathAnimation {
-            anchorPoint: "7,5"
+            anchorPoint: Qt.point(image_width/2, image_height/2)
             path:flypath
             target:enemy
             orientation:PathAnimation.TopFirst
@@ -71,13 +89,13 @@ Item {
                 target: enemy
                 duration: 800
                 property: "x"
-                to: ((end_x - background.width/2) * swinger.scale ) + background.width/2 -7
+                to: ((end_x - background.width/2) * swinger.scale ) + background.width/2 -image_width/2
             }
             NumberAnimation {
                 target: enemy
                 duration: 800
                 property: "y"
-                to: ((end_y - 30) * swinger.scale ) + 30 - 5
+                to: ((end_y - 30) * swinger.scale ) + 30 - image_height/2
             }
             NumberAnimation {
                 target: enemy
@@ -89,12 +107,12 @@ Item {
     }
     AnimatedSprite {
         id: sprite
-        width: 13
-        height: 10
+        width: image_width
+        height: image_height
         source: image
         frameCount: 2
-        frameWidth: 13
-        frameHeight: 10
+        frameWidth: image_width
+        frameHeight: image_height
         frameRate: 1
         interpolate : false
         loops: AnimatedSprite.Infinite

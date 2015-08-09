@@ -15,27 +15,40 @@ function createInstance(component, props) {
     return instance;
 }
 
-var fighterComponent = addComponent("Fighter.qml");
-var enemyComponent = addComponent("Enemy.qml");
-var lifeComponent = addComponent("Life.qml");
-var fireComponent = addComponent("Fire.qml");
-var pathFromLeftComponent = addComponent("PathFromTopLeft.qml");
-var pathFromRightComponent = addComponent("PathFromTopRight.qml");
+var fighterComponent = addComponent("Fighter.qml")
+var enemyComponent = addComponent("Enemy.qml")
+var lifeComponent = addComponent("Life.qml")
+var fireComponent = addComponent("Fire.qml")
+var pathFromLeftComponent = addComponent("PathFromTopLeft.qml")
+var pathFromRightComponent = addComponent("PathFromTopRight.qml")
+var pathFromBottomLeftComponent = addComponent("PathFromBottomLeft.qml")
+var pathFromBottomRightComponent = addComponent("PathFromBottomRight.qml")
 
 var fighter = null;
 var enemies = [];
 var bullets = [];
-var firstWave = [
-            [ ["assets/bee.png",104, 74, pathFromLeftComponent],["assets/butterfly.png",104, 50, pathFromRightComponent] ],
-            [ ["assets/bee.png",120, 74, pathFromLeftComponent],["assets/butterfly.png",120, 50, pathFromRightComponent] ],
-            [ ["assets/bee.png",104, 86, pathFromLeftComponent],["assets/butterfly.png",104, 62, pathFromRightComponent] ],
-            [ ["assets/bee.png",120, 86, pathFromLeftComponent],["assets/butterfly.png",120, 62, pathFromRightComponent] ]
+var waves = [
+            ["assets/bee.png",104, 74, pathFromLeftComponent, 180],             // first wave
+            ["assets/butterfly.png",104, 50, pathFromRightComponent, 180],
+            ["assets/bee.png",120, 74, pathFromLeftComponent, 180*2],
+            ["assets/butterfly.png",120, 50, pathFromRightComponent, 180*2],
+            ["assets/bee.png",104, 86, pathFromLeftComponent, 180*3],
+            ["assets/butterfly.png",104, 62, pathFromRightComponent, 180*3],
+            ["assets/bee.png",120, 86, pathFromLeftComponent, 180*4],
+            ["assets/butterfly.png",120, 62, pathFromRightComponent, 180*4],
+            ["assets/galaga_boss.png",88, 35, pathFromBottomLeftComponent, 5000 ], // second wave
+            ["assets/butterfly.png",88, 50, pathFromBottomLeftComponent, 5000+180],
+            ["assets/galaga_boss.png",104, 35, pathFromBottomLeftComponent, 5000+180*2 ],
+            ["assets/butterfly.png",136, 50, pathFromBottomLeftComponent, 5000+180*3 ],
+            ["assets/galaga_boss.png",120, 35, pathFromBottomLeftComponent, 5000+180*4 ],
+            ["assets/butterfly.png",88, 62, pathFromBottomLeftComponent, 5000+180*5 ],
+            ["assets/galaga_boss.png",136, 35, pathFromBottomLeftComponent, 5000+180*6 ],
+            ["assets/butterfly.png",136, 62, pathFromBottomLeftComponent, 5000+180*7 ]
         ];
 
 var leftPressed = false;
 var rightPressed = false;
 var started = false;
-var waveCount = 0;
 var score = 0;
 var lifeCount = 4;
 
@@ -53,12 +66,14 @@ function loadComponents() {
 
     fighter = createInstance(fighterComponent, {});
 
-    for( i = 0; i < firstWave.length; i++ ) {
-        var entry = firstWave[i];
-        for( var j = 0; j < entry.length; j++ ) {
-            var path = createInstance(entry[j][3], {"endX": entry[j][1], "endY": entry[j][2] });
-            enemies.push(createInstance(enemyComponent, {"image": entry[j][0], "flypath": path, "end_x":entry[j][1], "end_y":entry[j][2]}));
-        }
+    for( i = 0; i < waves.length; i++ ) {
+        var entry = waves[i];
+        var path = createInstance(entry[3], {"endX": entry[1], "endY": entry[2] });
+        enemies.push(createInstance(enemyComponent, {"image": entry[0],
+                                                     "flypath": path,
+                                                     "end_x": entry[1],
+                                                     "end_y": entry[2],
+                                                     "start_time": entry[4] }))
     }
 
     for( i = 0; i < 3; i++ ) {
@@ -78,7 +93,6 @@ function reset() {
 }
 
 function startNewGame() {
-    waveCount = 0;
     score = 0;
     hud.score = 0;
     hud.lifeCount = lifeCount;
@@ -89,7 +103,9 @@ function startNewGame() {
     fighter.visible = true;
 
     started = true;
-    wavebeat.restart();
+    for(var i = 0; i < enemies.length; ++i) {
+        enemies[i].start()
+    }
 }
 
 function quit() {
@@ -133,16 +149,6 @@ function move( time ) {
                 }
             }
         }
-    }
-}
-
-function triggerWave() {
-    if( !started )
-        return;
-
-    if( waveCount < enemies.length ){
-        enemies[waveCount++].start();
-        enemies[waveCount++].start();
     }
 }
 
