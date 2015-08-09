@@ -2,8 +2,8 @@ import QtQuick 2.4
 
 Path {
     id: myPath
-    property int endX: 103;
-    property int endY: 70;
+    property int endX
+    property int endY
 
     startX: 95
     startY: 0
@@ -20,6 +20,5 @@ Path {
             useLargeArc: true
             direction: PathArc.Clockwise
     }
-    //PathLine { x: myPath.endX; y: 120 }
-//    PathCurve{ x: myPath.endX; y: myPath.endY }
+    PathCurve{ x: myPath.endX; y: myPath.endY+5 }
 }

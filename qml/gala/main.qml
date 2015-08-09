@@ -9,6 +9,8 @@ import "game.js" as Logic
 ApplicationWindow {
     id: app
     property real scaling: 3.5
+    property int life_count: 3
+    property int stage: 1
     width: 224*scaling
     height: 288*scaling
 //    width: 4000*0.099*scaling // fits best with the bezel
@@ -70,10 +72,18 @@ ApplicationWindow {
 
         Item {
             id: swinger
+            property bool forward: true
+            property int duration: 2000
+            property real max_scaling_dist: 0.4
+            property real max_scaling: 1 + max_scaling_dist
+            property real scale_zero: max_scaling-(max_scaling-1)/2
             SequentialAnimation on scale {
+                id: swinger_animation
                 loops: Animation.Infinite
-                PropertyAnimation { id: forward; to: 1.3; duration: 1800 }
-                PropertyAnimation { id: backward; to: 1; duration: 1800 }
+                PropertyAction {target: swinger; property:"forward"; value: true}
+                PropertyAnimation {from: 1; to: swinger.max_scaling; duration: swinger.duration}
+                PropertyAction {target: swinger; property:"forward"; value: false}
+                PropertyAnimation {to: 1; duration: swinger.duration}
             }
         }
 

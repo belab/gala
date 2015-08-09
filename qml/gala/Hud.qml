@@ -2,7 +2,7 @@ import QtQuick 2.4
 
 Item {
     property int score: 0
-    property int lifeCount: 4
+
     Item {
         x:20
         y:0
@@ -57,11 +57,12 @@ Item {
     }
 
 
+
     Text {
         id: stageText
         visible: false
         anchors.centerIn: parent
-        text: "STAGE 1"
+        text: "STAGE " + stage
         font.pointSize: 6
         font.bold: true
         color: "#55CCCC"
@@ -75,7 +76,7 @@ Item {
         anchors.left: parent.left
         spacing: 2
         Repeater {
-            model: lifeCount
+            model: life_count
             Life{
 
             }

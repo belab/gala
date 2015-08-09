@@ -15,7 +15,7 @@ Item {
     NumberAnimation on y {
         id: animation
         running: false
-        from: startY; to: -10; duration: 900
+        from: startY; to: -10; duration: 1000
     }
 
     SoundEffect {

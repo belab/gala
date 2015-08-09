@@ -5,13 +5,14 @@ Item {
     property int score: 80
     property Path flypath
     property url image
-    visible: false
     state: "INITIAL"
     property int image_width: file.implicitWidth/2
     property int image_height: file.implicitHeight
     property int end_x
     property int end_y
     property int start_time
+    property int attack_time
+    property real blend_value: 0
 
     Image {
         id: file
@@ -25,22 +26,74 @@ Item {
 
     function start() {
         start_timer.restart()
-        console.log("starting timer:", start_time)
-//        enemy.state = "INCOMING"
+        attack_timer.restart()
     }
+
 
 //    onStateChanged: {
 //        console.log("state changed:", state)
 //    }
+
+    NumberAnimation on blend_value {
+        id: blending
+        from: 1000; to: 0
+    }
 
     Timer {
         id: start_timer
         interval: start_time
         running: false
         onTriggered: {
-            console.log("timer triggered")
             enemy.state = "INCOMING"
         }
+    }
+
+    Timer {
+        id: attack_timer
+        interval: attack_time
+        running: false
+        onTriggered: {
+            var duration = 0
+            if(swinger.forward) {
+                if(swinger.scale > swinger.scale_zero) {
+                    duration = swinger.duration/2 + swinger.duration/2*((swinger.max_scaling-swinger.scale)/swinger.max_scaling_dist*0.5)
+                } else {
+                    duration = swinger.duration/2*((swinger.scale-1.0)/swinger.max_scaling_dist*0.5)
+                }
+            } else {
+                if(swinger.scale > swinger.scale_zero) {
+                    duration = swinger.duration/2*((swinger.scale-swinger.scale_zero)/swinger.max_scaling_dist*0.5)
+                } else {
+                    duration = swinger.duration/2 + swinger.duration/2*((swinger.scale-1.0)/swinger.max_scaling_dist*0.5)
+                }
+            }
+            wait_for_swinging.interval = duration
+            wait_for_swinging.restart()
+
+        }
+    }
+    Timer {
+        id: wait_for_swinging
+        running: false
+        onTriggered: {
+            swinger.scale=1.0
+            swinger_animation.restart()
+            if(enemy.state !== "INITIAL") {
+                enemy.state = "ATTACKING"
+            }
+        }
+    }
+
+    function swingX() {
+        return end_x + 90 * (swinger.scale_zero-swinger.scale)
+    }
+
+    function scaleX() {
+        return ((end_x + image_width/2 - background.width/2) * swinger.scale ) + background.width/2 - image_width/2
+    }
+
+    function scaleY() {
+        return ((end_y + image_height/2 - 30) * swinger.scale ) + 30 - image_height/2
     }
 
     states: [
@@ -53,27 +106,40 @@ Item {
             PropertyChanges { target: enemy; visible: true }
         },
         State {
-            name: "READY"
-            PropertyChanges { target: enemy; visible: true }
-            PropertyChanges {target: enemy; x: ((end_x - background.width/2) * swinger.scale ) + background.width/2 - image_width/2  }
-            PropertyChanges {target: enemy; y: ((end_y - 30) * swinger.scale ) + 30 - image_height/2 }
+            name: "IDLE"
+            PropertyChanges {target: enemy; x: swingX() }
+            PropertyChanges {target: enemy; y: end_y }
+        },
+        State {
+            name: "ATTACKING"
+            PropertyChanges {
+                target: enemy
+                x: scaleX()
+//                x: blending.running? (swingX() * blend_value + scaleX() * (1000-blend_value))/1000 : scaleX()
+            }
+            PropertyChanges {
+                target: enemy
+                y: scaleY()
+//                y: blending.running? (end_y * blend_value + scaleY() * (1000-blend_value))/1000 : scaleY()
+            }
         }
+
     ]
 
     transitions: [
         Transition {
             to: "INCOMING"
             SequentialAnimation {
-                animations: [incoming, switch_to_ready]
+                animations: [incoming, switch_to_idle]
             }
         },
         Transition {
             from: "INCOMING"
-            to: "READY"
+            to: "IDLE"
         }
     ]
 
-    PropertyAction { id: switch_to_ready; target: enemy; property: "state"; value: "READY" }
+    PropertyAction { id: switch_to_idle; target: enemy; property: "state"; value: "IDLE" }
 
     SequentialAnimation {
         id: incoming
@@ -83,26 +149,8 @@ Item {
             target:enemy
             orientation:PathAnimation.TopFirst
             duration: 2000
-        }
-        ParallelAnimation {
-            NumberAnimation {
-                target: enemy
-                duration: 800
-                property: "x"
-                to: ((end_x - background.width/2) * swinger.scale ) + background.width/2 -image_width/2
-            }
-            NumberAnimation {
-                target: enemy
-                duration: 800
-                property: "y"
-                to: ((end_y - 30) * swinger.scale ) + 30 - image_height/2
-            }
-            NumberAnimation {
-                target: enemy
-                duration: 800
-                property: "rotation"
-                to: 0
-            }
+            orientationExitDuration: 800
+            endRotation: 0
         }
     }
     AnimatedSprite {

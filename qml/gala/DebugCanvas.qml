@@ -3,10 +3,10 @@ import QtQuick 2.4
 Canvas {
     id: canvas
     property list<Path> pathList: [
-            PathFromTopLeft {},
-            PathFromTopRight {},
-            PathFromBottomLeft {},
-            PathFromBottomRight {}
+            PathFromTopLeft {endX: 96; endY: 74},
+            PathFromTopRight {endX: 96; endY: 50},
+            PathFromBottomLeft {endX: 80; endY: 31},
+            PathFromBottomRight {endX: 160; endY: 50}
         ]
 
     onPaint: {
