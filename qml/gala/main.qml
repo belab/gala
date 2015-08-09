@@ -17,7 +17,7 @@ ApplicationWindow {
     visible: true
     Audio{
         id: player
-        source: "gala/gala.mp3"
+        source: "gala/assets/gala.mp3"
         autoPlay: true
         loops: Audio.Infinite
     }
@@ -72,8 +72,8 @@ ApplicationWindow {
             id: swinger
             SequentialAnimation on scale {
                 loops: Animation.Infinite
-                PropertyAnimation { id: forward; to: 1.3; duration: 2000 }
-                PropertyAnimation { id: backward; to: 1; duration: 2000 }
+                PropertyAnimation { id: forward; to: 1.3; duration: 1800 }
+                PropertyAnimation { id: backward; to: 1; duration: 1800 }
             }
         }
 

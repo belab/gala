@@ -1,24 +1,17 @@
 <RCC>
     <qresource prefix="/">
-        <file>qml/gala/bee.png</file>
-        <file>qml/gala/bezel_glass.png</file>
-        <file>qml/gala/butterfly.png</file>
         <file>qml/gala/Enemy.qml</file>
         <file>qml/gala/DebugCanvas.qml</file>
-        <file>qml/gala/fighter.png</file>
         <file>qml/gala/Fighter.qml</file>
-        <file>qml/gala/fighter_small.png</file>
-        <file>qml/gala/galaga_bezel.png</file>
         <file>qml/gala/game.js</file>
         <file>qml/gala/Hud.qml</file>
         <file>qml/gala/Life.qml</file>
         <file>qml/gala/main.qml</file>
         <file>qml/gala/PathFromTopLeft.qml</file>
         <file>qml/gala/PathFromTopRight.qml</file>
-        <file>qml/gala/star.png</file>
         <file>qml/gala/Stars.qml</file>
         <file>qml/gala/Fire.qml</file>
-        <file>qml/gala/fire.png</file>
-        <file>qml/gala/Fire.wav</file>
+        <file>qml/gala/PathFromBottomLeft.qml</file>
+        <file>qml/gala/PathFromBottomRight.qml</file>
     </qresource>
 </RCC>

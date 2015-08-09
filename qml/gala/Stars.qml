@@ -4,7 +4,7 @@ import QtQuick.Particles 2.0
 ParticleSystem {
 
     ImageParticle {
-        source: "star.png"
+        source: "assets/star.png"
         colorVariation: 1.0
     }
 

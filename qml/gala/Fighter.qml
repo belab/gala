@@ -5,7 +5,7 @@ Item {
     height: 16
     visible: false
     Image {
-        source: "fighter.png"
+        source: "assets/fighter.png"
         anchors.fill: parent
     }
 }

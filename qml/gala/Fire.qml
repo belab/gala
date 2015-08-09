@@ -20,13 +20,13 @@ Item {
 
     SoundEffect {
             id: playSound
-            source: "Fire.wav"
+            source: "assets/Fire.wav"
         }
 
     Image {
         x: -1
         y: -4
-        source: "fire.png"
+        source: "assets/fire.png"
         anchors.fill: parent
     }
 

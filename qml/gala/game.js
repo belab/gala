@@ -26,10 +26,10 @@ var fighter = null;
 var enemies = [];
 var bullets = [];
 var firstWave = [
-            [ ["bee.png",104, 74, pathFromLeftComponent],["butterfly.png",104, 50, pathFromRightComponent] ],
-            [ ["bee.png",120, 74, pathFromLeftComponent],["butterfly.png",120, 50, pathFromRightComponent] ],
-            [ ["bee.png",104, 86,pathFromLeftComponent],["butterfly.png",104, 62, pathFromRightComponent] ],
-            [ ["bee.png",120, 86,pathFromLeftComponent],["butterfly.png",120, 62, pathFromRightComponent] ]
+            [ ["assets/bee.png",104, 74, pathFromLeftComponent],["assets/butterfly.png",104, 50, pathFromRightComponent] ],
+            [ ["assets/bee.png",120, 74, pathFromLeftComponent],["assets/butterfly.png",120, 50, pathFromRightComponent] ],
+            [ ["assets/bee.png",104, 86, pathFromLeftComponent],["assets/butterfly.png",104, 62, pathFromRightComponent] ],
+            [ ["assets/bee.png",120, 86, pathFromLeftComponent],["assets/butterfly.png",120, 62, pathFromRightComponent] ]
         ];
 
 var leftPressed = false;

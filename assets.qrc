@@ -1,0 +1,13 @@
+<RCC>
+    <qresource prefix="/">
+        <file>qml/gala/assets/bee.png</file>
+        <file>qml/gala/assets/bezel_glass.png</file>
+        <file>qml/gala/assets/butterfly.png</file>
+        <file>qml/gala/assets/fighter.png</file>
+        <file>qml/gala/assets/fighter_small.png</file>
+        <file>qml/gala/assets/fire.png</file>
+        <file>qml/gala/assets/Fire.wav</file>
+        <file>qml/gala/assets/galaga_bezel.png</file>
+        <file>qml/gala/assets/star.png</file>
+    </qresource>
+</RCC>
